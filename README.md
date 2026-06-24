@@ -10,6 +10,13 @@
 - Bootstrap 5
 - Pillow
 - python-dotenv
+- Кастомные команды Django
+
+## Фикстуры
+
+Для загрузки тестовых данных используй кастомную команду:
+```bash
+poetry run python manage.py load_test_data
 
 ## Установка и запуск
 
