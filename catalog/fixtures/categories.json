@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "model": "catalog.category",
+        "pk": 9,
+        "fields": {
+            "name": "Электроника",
+            "description": "Гаджеты и устройства"
+        }
+    },
+    {
+        "model": "catalog.category",
+        "pk": 10,
+        "fields": {
+            "name": "Книги",
+            "description": "Художественная литература"
+        }
+    }
+]
