@@ -26,25 +26,34 @@
         продать</p>
 </div>
 
-<div class="container">
-    <div class="row text-center">
-        <div class="col-3">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Удобный сервис рассылок</h4>
-                </div>
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Skystore</h1>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% endif %}
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">$ 140</h1>
-                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>- Неограниченная лицензия</li>
-                        <li>- Поддержка</li>
-                        <li>- Установка на сервер</li>
-                        <li>- Получение обновлений</li>
-                    </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">
+                        {{ product.description|truncatechars:100 }}
+                    </p>
+                    <p class="card-text"><strong>€ {{ product.price }}</strong></p>
+                    <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary">Подробнее</a>
                 </div>
             </div>
         </div>
+        {% empty %}
+        <p>Товаров пока нет.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
     </div>
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
