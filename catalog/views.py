@@ -2,12 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Product
+from django.views.generic import ListView
 
 
-def home(request):
-    """Главная страница"""
-    products = Product.objects.all()
-    return render(request, 'catalog/home.html', {'products': products})
+class HomeView(ListView):
+    model = Product
+    template_name = 'catalog/home.html'
+    context_object_name = 'products'
 
 
 def contacts(request):
