@@ -5,22 +5,31 @@
 ## Технологии
 - Python 3.14
 - Django 6.0.6
-- PostgreSQL / SQLite
+- SQLite / PostgreSQL
 - Poetry
 - Bootstrap 5
 - Pillow
 - python-dotenv
-- Кастомные команды Django
-- Шаблонизация Django (наследование, include)
+- Class-Based Views (CBV)
+- CRUD для блога
 
 ## Функциональность
+### Каталог (`catalog`)
 - Главная страница со списком всех товаров
 - Страница детального просмотра товара (`/products/<int:pk>/`)
 - Обрезанное описание товара (до 100 символов) на главной
 - Базовый шаблон (`base.html`) с общей шапкой и подвалом
 - Подшаблон меню (`menu.html`) для навигации
-- Контактная страница
-- Административная панель Django
+
+### Блог (`blog`)
+- Полный CRUD для блоговых записей:
+  - Создание (`/blog/new/`)
+  - Чтение (`/blog/<int:pk>/`)
+  - Редактирование (`/blog/<int:pk>/edit/`)
+  - Удаление (`/blog/<int:pk>/delete/`)
+- Счётчик просмотров для каждой статьи
+- Фильтрация: отображаются только опубликованные статьи (`is_published=True`)
+- Превью (изображение) для каждой статьи
 
 ## Установка и запуск
 
@@ -29,7 +38,7 @@ git clone https://github.com/Alexander-Sky/skystore.git
 cd skystore
 poetry install
 Настройка базы данных
-Создай файл .env в корне проекта со следующим содержимым:
+Создай файл .env в корне проекта:
 
 env
 DB_NAME=skystore
@@ -39,7 +48,7 @@ DB_HOST=localhost
 DB_PORT=5432
 SECRET_KEY=твой_секретный_ключ
 DEBUG=True
-Или используй SQLite (для разработки без установки PostgreSQL):
+Или используй SQLite (для разработки):
 
 В settings.py замени блок DATABASES на:
 
@@ -54,7 +63,7 @@ DATABASES = {
 
 bash
 poetry run python manage.py migrate
-Создай суперпользователя для админки:
+Создай суперпользователя:
 
 bash
 poetry run python manage.py createsuperuser
@@ -64,20 +73,30 @@ poetry run python manage.py runserver
 Открыть: http://127.0.0.1:8000/
 
 Загрузка тестовых данных
-Для наполнения базы тестовыми данными выполни кастомную команду:
+Для наполнения базы тестовыми данными:
 
 bash
 poetry run python manage.py load_test_data
 Структура шаблонов
-catalog/base.html – базовый шаблон (шапка, подвал, стили)
+Каталог
+catalog/base.html – базовый шаблон
 
-catalog/menu.html – подшаблон с навигационным меню
+catalog/menu.html – подшаблон меню
 
-catalog/home.html – главная страница со списком товаров
+catalog/home.html – главная страница
 
 catalog/product_detail.html – страница товара
 
 catalog/contacts.html – страница контактов
+
+Блог
+blog/blog_list.html – список статей
+
+blog/blog_detail.html – детали статьи
+
+blog/blog_form.html – создание/редактирование
+
+blog/blog_confirm_delete.html – подтверждение удаления
 
 Скриншоты
 В папке screenshots/ находятся скриншоты выполнения запросов в Django Shell.
