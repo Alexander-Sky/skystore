@@ -5,31 +5,31 @@
 ## Технологии
 - Python 3.14
 - Django 6.0.6
-- SQLite / PostgreSQL
+- SQLite (разработка)
 - Poetry
 - Bootstrap 5
 - Pillow
 - python-dotenv
 - Class-Based Views (CBV)
-- CRUD для блога
+- Django Forms с валидацией
 
 ## Функциональность
 ### Каталог (`catalog`)
-- Главная страница со списком всех товаров
-- Страница детального просмотра товара (`/products/<int:pk>/`)
-- Обрезанное описание товара (до 100 символов) на главной
-- Базовый шаблон (`base.html`) с общей шапкой и подвалом
-- Подшаблон меню (`menu.html`) для навигации
+- Полный CRUD для продуктов:
+  - Создание (`/create/`)
+  - Чтение (`/` и `/<int:pk>/`)
+  - Редактирование (`/<int:pk>/update/`)
+  - Удаление (`/<int:pk>/delete/`)
+- Валидация форм:
+  - Запрещённые слова в названии и описании
+  - Цена не может быть отрицательной
+- Стилизация форм через Bootstrap (метод `__init__`)
+- Загрузка и отображение изображений продуктов
 
 ### Блог (`blog`)
-- Полный CRUD для блоговых записей:
-  - Создание (`/blog/new/`)
-  - Чтение (`/blog/<int:pk>/`)
-  - Редактирование (`/blog/<int:pk>/edit/`)
-  - Удаление (`/blog/<int:pk>/delete/`)
-- Счётчик просмотров для каждой статьи
-- Фильтрация: отображаются только опубликованные статьи (`is_published=True`)
-- Превью (изображение) для каждой статьи
+- Полный CRUD для блоговых записей
+- Счётчик просмотров
+- Фильтрация по публикации
 
 ## Установка и запуск
 
@@ -49,8 +49,6 @@ DB_PORT=5432
 SECRET_KEY=твой_секретный_ключ
 DEBUG=True
 Или используй SQLite (для разработки):
-
-В settings.py замени блок DATABASES на:
 
 python
 DATABASES = {
@@ -81,13 +79,13 @@ poetry run python manage.py load_test_data
 Каталог
 catalog/base.html – базовый шаблон
 
-catalog/menu.html – подшаблон меню
+catalog/product_list.html – список продуктов
 
-catalog/home.html – главная страница
+catalog/product_detail.html – детали продукта
 
-catalog/product_detail.html – страница товара
+catalog/product_form.html – форма создания/редактирования
 
-catalog/contacts.html – страница контактов
+catalog/product_confirm_delete.html – подтверждение удаления
 
 Блог
 blog/blog_list.html – список статей
@@ -99,7 +97,7 @@ blog/blog_form.html – создание/редактирование
 blog/blog_confirm_delete.html – подтверждение удаления
 
 Скриншоты
-В папке screenshots/ находятся скриншоты выполнения запросов в Django Shell.
+В папке screenshots/ находятся скриншоты выполнения запросов в Django Shell и работы интерфейса.
 
 Автор
 Александр Шишкин
