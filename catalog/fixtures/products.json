@@ -1,0 +1,41 @@
+[
+    {
+        "model": "catalog.product",
+        "pk": 13,
+        "fields": {
+            "name": "Смартфон",
+            "description": "Флагманский телефон",
+            "image": "",
+            "category": 9,
+            "price": "999.99",
+            "created_at": "2026-06-24T05:31:22.661000+00:00",
+            "updated_at": "2026-06-24T05:31:22.661098+00:00"
+        }
+    },
+    {
+        "model": "catalog.product",
+        "pk": 14,
+        "fields": {
+            "name": "Ноутбук",
+            "description": "Мощный ноутбук для работы",
+            "image": "",
+            "category": 9,
+            "price": "1499.99",
+            "created_at": "2026-06-24T05:31:22.679720+00:00",
+            "updated_at": "2026-06-24T05:31:22.679820+00:00"
+        }
+    },
+    {
+        "model": "catalog.product",
+        "pk": 15,
+        "fields": {
+            "name": "Роман",
+            "description": "Современная проза",
+            "image": "",
+            "category": 10,
+            "price": "19.99",
+            "created_at": "2026-06-24T05:31:22.686696+00:00",
+            "updated_at": "2026-06-24T05:31:22.686716+00:00"
+        }
+    }
+]
