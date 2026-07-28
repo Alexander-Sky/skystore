@@ -1,3 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import UserRegisterForm
 
-# Create your views here.
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.email  # используем email как username
+            user.save()
+
+            # Отправка приветственного письма
+            send_mail(
+                subject='Добро пожаловать!',
+                message='Вы успешно зарегистрировались на нашем сайте!',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                fail_silently=True,
+            )
+
+            return redirect('users:login')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'users/register.html', {'form': form})
