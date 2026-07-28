@@ -17,7 +17,7 @@ def register(request):
                 message='Вы успешно зарегистрировались на нашем сайте!',
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[user.email],
-                fail_silently=True,
+                fail_silently=False,
             )
             return redirect('users:login')
     else:
