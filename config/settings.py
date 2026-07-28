@@ -101,11 +101,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 #новая модель
 AUTH_USER_MODEL = 'users.User'
 
-# Email settings
+# ===========================
+# Email settings (Yandex)
+# ===========================
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'adm1ntestov@yandex.com'
-EMAIL_HOST_PASSWORD = 'dein_app_password'
+EMAIL_HOST_PASSWORD = 'qfsolrjzlrwbnbfb'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
