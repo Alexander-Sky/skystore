@@ -1,19 +1,17 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import UserRegisterForm
-from django.contrib.auth import authenticate, login
-
 
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.email  # используем email как username
+            user.username = user.email
             user.save()
 
-            # Отправка приветственного письма
             send_mail(
                 subject='Добро пожаловать!',
                 message='Вы успешно зарегистрировались на нашем сайте!',
@@ -21,12 +19,10 @@ def register(request):
                 recipient_list=[user.email],
                 fail_silently=True,
             )
-
             return redirect('users:login')
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
-
 
 def user_login(request):
     if request.method == 'POST':
@@ -39,3 +35,7 @@ def user_login(request):
         else:
             return render(request, 'users/login.html', {'error': 'Неверный email или пароль'})
     return render(request, 'users/login.html')
+
+def user_logout(request):
+    logout(request)
+    return redirect('catalog:product_list')
