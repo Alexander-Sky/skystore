@@ -99,5 +99,16 @@ blog/blog_confirm_delete.html – подтверждение удаления
 Скриншоты
 В папке screenshots/ находятся скриншоты выполнения запросов в Django Shell и работы интерфейса.
 
+## Authentifizierung
+- Registrierung mit E-Mail-Bestätigung
+- Login/Logout
+- Zugriffsschutz für CRUD-Operationen (nur eingeloggte Benutzer)
+
+## Benutzerprofil
+- Erweiterte Benutzermodell mit:
+  - Avatar
+  - Telefon
+  - Land
+
 Автор
 Александр Шишкин
