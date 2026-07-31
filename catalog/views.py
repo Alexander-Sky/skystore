@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from .models import Product
 from .forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 class ProductListView(ListView):
     model = Product
@@ -30,8 +31,19 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:product_list')
 
+    def dispatch(self, request, *args, **kwargs):
+        product = self.get_object()
+        if product.owner != request.user and not request.user.has_perm('catalog.can_unpublish_product'):
+            raise PermissionDenied("У вас нет прав на редактирование этого продукта.")
+        return super().dispatch(request, *args, **kwargs)
+
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('catalog:product_list')
 
+    def dispatch(self, request, *args, **kwargs):
+        product = self.get_object()
+        if product.owner != request.user and not request.user.has_perm('catalog.can_unpublish_product'):
+            raise PermissionDenied("У вас нет прав на удаление этого продукта.")
+        return super().dispatch(request, *args, **kwargs)
