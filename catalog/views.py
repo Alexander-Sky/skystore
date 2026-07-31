@@ -5,7 +5,8 @@ from .forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decoratorfrom django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404
 from .models import Category
 from .services import get_products_by_category_with_cache
 
