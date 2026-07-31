@@ -4,6 +4,8 @@ from .models import Product
 from .forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 class ProductListView(ListView):
     model = Product
@@ -14,6 +16,10 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
     context_object_name = 'product'
+
+    @method_decorator(cache_page(60 * 15))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
