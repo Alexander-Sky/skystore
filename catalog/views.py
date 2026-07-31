@@ -33,8 +33,13 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         product = self.get_object()
-        if product.owner != request.user and not request.user.has_perm('catalog.can_unpublish_product'):
-            raise PermissionDenied("У вас нет прав на редактирование этого продукта.")
+        is_owner = product.owner == request.user
+        is_moderator = (
+                request.user.has_perm('catalog.can_unpublish_product')
+                or request.user.has_perm('catalog.delete_product')
+        )
+        if not (is_owner or is_moderator):
+            raise PermissionDenied("У вас нет прав на это действие.")
         return super().dispatch(request, *args, **kwargs)
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
@@ -44,6 +49,11 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         product = self.get_object()
-        if product.owner != request.user and not request.user.has_perm('catalog.can_unpublish_product'):
-            raise PermissionDenied("У вас нет прав на удаление этого продукта.")
+        is_owner = product.owner == request.user
+        is_moderator = (
+                request.user.has_perm('catalog.can_unpublish_product')
+                or request.user.has_perm('catalog.delete_product')
+        )
+        if not (is_owner or is_moderator):
+            raise PermissionDenied("У вас нет прав на это действие.")
         return super().dispatch(request, *args, **kwargs)

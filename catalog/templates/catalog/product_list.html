@@ -22,7 +22,7 @@
                 <p class="card-text"><small class="text-muted">Категория: {{ product.category.name }}</small></p>
 
                 {% if product.owner == user or perms.catalog.can_unpublish_product %}
-                    <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-sm btn-secondary">Редактировать</a>
+                    <a href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
                     <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-danger">Удалить</a>
                 {% endif %}
 
