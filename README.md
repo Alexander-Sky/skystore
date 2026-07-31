@@ -26,10 +26,32 @@
 - Стилизация форм через Bootstrap (метод `__init__`)
 - Загрузка и отображение изображений продуктов
 
+### Права доступа и модерация
+- Добавлено поле `is_published` (статус публикации продукта)
+- Кастомное право `can_unpublish_product` – может отменять публикацию продукта
+- Группа **"Модератор продуктов"** с правами:
+  - `can_unpublish_product`
+  - `delete_product` (удаление любого продукта)
+- Поле `owner` – автоматически заполняется при создании продукта
+- Проверки в контроллерах:
+  - Редактирование и удаление доступны только владельцу или модератору
+- Кнопки редактирования/удаления отображаются только для владельца или модератора
+
 ### Блог (`blog`)
 - Полный CRUD для блоговых записей
 - Счётчик просмотров
 - Фильтрация по публикации
+
+### Аутентификация
+- Регистрация с E-Mail-подтверждением
+- Login/Logout
+- Zugriffsschutz für CRUD-Operationen (nur eingeloggte Benutzer)
+
+### Benutzerprofil
+- Erweiterte Benutzermodell mit:
+  - Avatar
+  - Telefon
+  - Land
 
 ## Установка и запуск
 
@@ -98,17 +120,6 @@ blog/blog_confirm_delete.html – подтверждение удаления
 
 Скриншоты
 В папке screenshots/ находятся скриншоты выполнения запросов в Django Shell и работы интерфейса.
-
-## Authentifizierung
-- Registrierung mit E-Mail-Bestätigung
-- Login/Logout
-- Zugriffsschutz für CRUD-Operationen (nur eingeloggte Benutzer)
-
-## Benutzerprofil
-- Erweiterte Benutzermodell mit:
-  - Avatar
-  - Telefon
-  - Land
 
 Автор
 Александр Шишкин
