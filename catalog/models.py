@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Наименование")
@@ -20,6 +21,13 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
     is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Владелец"
+    )
 
     class Meta:
         verbose_name = "Продукт"
