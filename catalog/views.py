@@ -5,7 +5,9 @@ from .forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
+from django.utils.decorators import method_decoratorfrom django.shortcuts import get_object_or_404
+from .models import Category
+from .services import get_products_by_category_with_cache
 
 class ProductListView(ListView):
     model = Product
@@ -63,3 +65,16 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
         if not (is_owner or is_moderator):
             raise PermissionDenied("У вас нет прав на это действие.")
         return super().dispatch(request, *args, **kwargs)
+
+class CategoryProductsView(ListView):
+    template_name = 'catalog/category_products.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
+        return get_products_by_category_with_cache(self.category.pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
