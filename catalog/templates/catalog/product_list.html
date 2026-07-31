@@ -11,16 +11,22 @@
     <div class="col-md-4 mb-4">
         <div class="card h-100">
             {% if product.image %}
-            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
             {% else %}
-            <div class="card-img-top bg-light text-center py-5">Нет изображения</div>
+                <div class="card-img-top bg-light text-center py-5">Нет изображения</div>
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">{{ product.description|truncatechars:100 }}</p>
                 <p class="card-text"><strong>Цена: € {{ product.price }}</strong></p>
                 <p class="card-text"><small class="text-muted">Категория: {{ product.category.name }}</small></p>
-                <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-outline-primary">Подробнее</a>
+
+                {% if product.owner == user or perms.catalog.can_unpublish_product %}
+                    <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-sm btn-secondary">Редактировать</a>
+                    <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                {% endif %}
+
+                <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
             </div>
         </div>
     </div>
