@@ -5,15 +5,18 @@
 ## Технологии
 - Python 3.14
 - Django 6.0.6
-- SQLite (разработка)
+- SQLite (разработка) / PostgreSQL (продакшен)
 - Poetry
 - Bootstrap 5
 - Pillow
 - python-dotenv
 - Class-Based Views (CBV)
 - Django Forms с валидацией
+- Redis (кэширование)
+- Аутентификация и права доступа
 
 ## Функциональность
+
 ### Каталог (`catalog`)
 - Полный CRUD для продуктов:
   - Создание (`/create/`)
@@ -26,10 +29,37 @@
 - Стилизация форм через Bootstrap (метод `__init__`)
 - Загрузка и отображение изображений продуктов
 
+### Кэширование (Redis)
+- Страница продукта кэшируется на 15 минут (`cache_page`)
+- Список продуктов в категории кэшируется на 10 минут
+- Низкоуровневое кэширование через сервисный слой
+
+### Права доступа и модерация
+- Поле `is_published` (статус публикации продукта)
+- Кастомное право `can_unpublish_product`
+- Группа **"Модератор продуктов"** с правами:
+  - `can_unpublish_product`
+  - `delete_product`
+- Поле `owner` – автоматически заполняется при создании продукта
+- Проверки в контроллерах:
+  - Редактирование и удаление доступны только владельцу или модератору
+- Кнопки редактирования/удаления отображаются только для владельца или модератора
+
 ### Блог (`blog`)
 - Полный CRUD для блоговых записей
 - Счётчик просмотров
 - Фильтрация по публикации
+
+### Аутентификация
+- Регистрация с E-Mail-подтверждением
+- Login/Logout
+- Zugriffsschutz für CRUD-Operationen (nur eingeloggte Benutzer)
+
+### Benutzerprofil
+- Erweiterte Benutzermodell mit:
+  - Avatar
+  - Telefon
+  - Land
 
 ## Установка и запуск
 
@@ -65,6 +95,25 @@ poetry run python manage.py migrate
 
 bash
 poetry run python manage.py createsuperuser
+Настройка Redis (для кэширования)
+Установи Redis (локально или через Docker).
+
+В settings.py добавь:
+
+python
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+Проверь работу:
+
+bash
+redis-cli ping  # должно вернуть PONG
 Запуск сервера
 bash
 poetry run python manage.py runserver
@@ -86,6 +135,8 @@ catalog/product_detail.html – детали продукта
 catalog/product_form.html – форма создания/редактирования
 
 catalog/product_confirm_delete.html – подтверждение удаления
+
+catalog/category_products.html – список продуктов по категории (с кэшированием)
 
 Блог
 blog/blog_list.html – список статей

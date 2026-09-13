@@ -37,6 +37,28 @@ argon2 = ["argon2-cffi (>=23.1.0)"]
 bcrypt = ["bcrypt (>=4.1.1)"]
 
 [[package]]
+name = "django-redis"
+version = "7.0.0"
+description = "Full featured redis cache backend for Django."
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "django_redis-7.0.0-py3-none-any.whl", hash = "sha256:4b23aa6e0cd0937bb1242e9a463809e6004de3ca2150f34e986306bb6220d688"},
+    {file = "django_redis-7.0.0.tar.gz", hash = "sha256:e48491c862f4350b0747ceb1016700686fb93c4f4e0fb9c490fe6c6658ffd933"},
+]
+
+[package.dependencies]
+Django = ">=5.2,<7.0"
+redis = ">=4.0.2"
+
+[package.extras]
+hiredis = ["redis[hiredis] (>=4.0.2)"]
+lz4 = ["lz4 (>=0.15)"]
+msgpack = ["msgpack (>=0.6.0)"]
+pyzstd = ["pyzstd (>=0.15)"]
+
+[[package]]
 name = "pillow"
 version = "12.2.0"
 description = "Python Imaging Library (fork)"
@@ -238,6 +260,22 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
+name = "redis"
+version = "4.6.0"
+description = "Python client for Redis database and key-value store"
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+files = [
+    {file = "redis-4.6.0-py3-none-any.whl", hash = "sha256:e2b03db868160ee4591de3cb90d40ebb50a90dd302138775937f6a42b7ed183c"},
+    {file = "redis-4.6.0.tar.gz", hash = "sha256:585dc516b9eb042a619ef0a39c3d7d55fe81bdb4df09a52c9cdde0d07bf1aa7d"},
+]
+
+[package.extras]
+hiredis = ["hiredis (>=1.0.0)"]
+ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
+
+[[package]]
 name = "sqlparse"
 version = "0.5.5"
 description = "A non-validating SQL parser."
@@ -269,4 +307,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.14"
-content-hash = "e38db17e0bbc1900494ae93259d9561e46fecdb08e4f7767f1b92a3e5c33db67"
+content-hash = "468bcb6b1cdf4f3cc8eb8f0350b598923a6449c0750eed8d704f5794df622a81"
